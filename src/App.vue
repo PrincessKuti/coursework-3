@@ -306,7 +306,7 @@ export default {
             window.addEventListener('load', () => {
                 navigator.serviceWorker
                     .register('./service-worker.js', {
-                        scope: '/coursework-3',
+                        scope: '/coursework-3/',
                     })
                     .then((registration) => {
                         console.log('Service worker registered: ', registration)
