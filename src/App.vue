@@ -12,7 +12,19 @@
 
       </div>
 
-      <Lessons v-if="!showCart" />
+      <div v-if="!showCart">
+
+        <div class="w-full flex justify-center" v-if="loading">
+          <iframe class="w-1/2" src="https://embed.lottiefiles.com/animation/99297" title="loading"></iframe>
+        </div>
+
+        <div class="w-full flex justify-center" v-else-if="error">
+          <iframe class="w-1/2" src="https://embed.lottiefiles.com/animation/95614" title="error"></iframe>
+        </div>
+
+        <Lessons :lessons="sortedLessons" v-else />
+
+      </div>
 
       <Checkout v-else class="mt-8" />
     </div>
@@ -29,13 +41,26 @@ export default {
     Checkout
   },
   data: () => ({
-    loading: false,
-    error: null,
-    url: 'https://course.eu-north-1.elasticbeanstalk.com',
-    showCart: false,
     shoppingCart: [],
     searchQuery: '',
     lessons: [],
+    loading: false,
+    error: null,
+    showCart: false,
+    sortBy: 'subject',
+    orderBy: 'asc',
+    url: 'https://course.eu-north-1.elasticbeanstalk.com',
+    sortOptions: ["subject", "location", "price", "spaces"],
+    orders: [
+      {
+        text: "Ascending",
+        value: "asc",
+      },
+      {
+        text: "Descending",
+        value: "desc",
+      },
+    ],
   }),
   methods: {
     async getLessons() {
@@ -53,9 +78,36 @@ export default {
         this.loading = false;
       }
     },
+    capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    getSortValue(lesson) {
+      switch (this.sortBy) {
+        case "subject":
+        case "location":
+          return lesson[this.sortBy].toLowerCase();
+        case "price":
+        case "availability":
+          return lesson[this.sortBy];
+        default:
+          return 0;
+      }
+    },
+    compareValues(a, b) {
+      return a > b ? 1 : a < b ? -1 : 0;
+    },
     toggleCart() {
       // Toggle the visibility of the shopping cart
       this.showCart = !this.showCart;
+    },
+  },
+  computed: {
+    sortedLessons() {
+      return this.lessons
+        .sort((a, b) => {
+          const order = this.orderBy === 'asc' ? 1 : -1;
+          return a[this.sortBy] > b[this.sortBy] ? order : -order;
+        });
     },
   },
   created() {
