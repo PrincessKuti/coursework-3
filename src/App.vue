@@ -52,7 +52,7 @@
 
       </div>
 
-      <Checkout v-else class="mt-8" />
+      <Checkout :shopping-cart="shoppingCart" v-else class="mt-8" />
     </div>
   </main>
 </template>
