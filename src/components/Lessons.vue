@@ -9,7 +9,7 @@
             class="bg-white rounded-lg shadow-md overflow-hidden p-4 border-l-4 border-blue-500 mb-4"
         >
             <img
-                :src="`/imgs/${lesson.image}`"
+                :src="`./imgs${lesson.image}`"
                 :alt="lesson.subject"
                 class="w-full h-48 object-cover object-center mb-4"
             />
