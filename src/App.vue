@@ -140,12 +140,14 @@ export default {
     removeFromCart(cartItem) {
       // Remove from cart logic
       const index = this.shoppingCart.findIndex(item => item.id === cartItem.id);
+
       if (index !== -1) {
         this.shoppingCart.splice(index, 1);
       }
 
       // Add the removed lesson back to the lesson list
-      const lessonIndex = this.lessons.findIndex(lesson => lesson.id === cartItem.id);
+      const lessonIndex = this.lessons.findIndex(lesson => lesson._id === cartItem.id);
+
       if (lessonIndex !== -1) {
         this.lessons[lessonIndex].spaces += cartItem.spaces;
       }
