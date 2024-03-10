@@ -8,14 +8,13 @@
                     <p class="text-lg font-semibold text-blue-500">{{ cartItem.subject }}</p>
                     <p class="text-gray-600">{{ cartItem.spaces }} spaces</p>
                 </div>
-                <button @click="removeFromCart(cartItem)"
+                <button @click="$emit('remove-item-from-cart', cartItem)"
                     class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring focus:border-red-300">
                     Remove
                 </button>
             </li>
         </ul>
 
-        <!-- Checkout Section -->
         
     </div>
 </template>

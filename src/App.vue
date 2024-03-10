@@ -52,7 +52,7 @@
 
       </div>
 
-      <Checkout :shopping-cart="shoppingCart" v-else class="mt-8" />
+      <Checkout :shopping-cart="shoppingCart" @remove-item-from-cart="removeFromCart" v-else class="mt-8" />
     </div>
   </main>
 </template>
@@ -136,6 +136,22 @@ export default {
         // Reduce the remaining space by one
         lesson.spaces -= 1;
       }
+    },
+    removeFromCart(cartItem) {
+      // Remove from cart logic
+      const index = this.shoppingCart.findIndex(item => item.id === cartItem.id);
+      if (index !== -1) {
+        this.shoppingCart.splice(index, 1);
+      }
+
+      // Add the removed lesson back to the lesson list
+      const lessonIndex = this.lessons.findIndex(lesson => lesson.id === cartItem.id);
+      if (lessonIndex !== -1) {
+        this.lessons[lessonIndex].spaces += cartItem.spaces;
+      }
+
+      // Check if the cart is empty after removing an item
+      this.showCart = this.shoppingCart.length > 0;
     },
     toggleCart() {
       // Toggle the visibility of the shopping cart
