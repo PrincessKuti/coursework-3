@@ -11,7 +11,7 @@
             <p class="text-gray-600"><strong>Spaces:</strong> {{ lesson.spaces }}</p>
 
             <!-- "Add to Cart" button -->
-            <button @click="addToCart(lesson)" :disabled="lesson.spaces === 0"
+            <button @click="$emit('add-item-to-cart', lesson)" :disabled="lesson.spaces === 0"
                 class="mt-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300 disabled:opacity-50">
                 Add to Cart
             </button>
@@ -21,6 +21,6 @@
 
 <script>
 export default {
-    props: ['lessons']
+    props: ['lessons'],
 }
 </script>

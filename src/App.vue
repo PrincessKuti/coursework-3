@@ -22,7 +22,7 @@
           <iframe class="w-1/2" src="https://embed.lottiefiles.com/animation/95614" title="error"></iframe>
         </div>
 
-        <Lessons :lessons="sortedLessons" v-else />
+        <Lessons :lessons="sortedLessons" @add-item-to-cart="addToCart" v-else />
 
       </div>
 
@@ -95,6 +95,21 @@ export default {
     },
     compareValues(a, b) {
       return a > b ? 1 : a < b ? -1 : 0;
+    },
+    addToCart(lesson) {
+      if (lesson.spaces > 0) {
+        // Add the lesson to the cart
+        this.shoppingCart.push({
+          id: lesson._id,
+          subject: lesson.subject,
+          price: lesson.price,
+          location: lesson.location,
+          spaces: 1,
+        });
+
+        // Reduce the remaining space by one
+        lesson.spaces -= 1;
+      }
     },
     toggleCart() {
       // Toggle the visibility of the shopping cart
