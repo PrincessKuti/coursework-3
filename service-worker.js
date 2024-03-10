@@ -10,7 +10,6 @@ const filesToCache = [
   "/favicon-16x16.png",
   "/favicon-32x32.png",
   "/favicon.ico",
-  "https://unpkg.com/vue@2.7.8/dist/vue.js",
 ];
 
 self.addEventListener("install", (event) => {
