@@ -14,6 +14,32 @@
 
       <div v-if="!showCart">
 
+        <!-- Search -->
+        <div class="mb-8">
+          <input v-model="searchQuery" type="text" placeholder="Search lessons"
+            class="p-2 block w-full border rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <!-- Sort Options -->
+        <div class="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-between mb-8">
+          <div class="flex flex-wrap">
+            <label v-for="option in sortOptions" :key="option" :for="`sortAttribute${option}`"
+              class="inline-flex items-center space-x-2 cursor-pointer text-lg mr-4 mb-2">
+              <input type="radio" :id="`sortAttribute${option}`" v-model="sortBy" :value="option"
+                class="form-radio text-blue-500 focus:ring-2 focus:ring-blue-300">
+              <span>{{ capitalize(option) }}</span>
+            </label>
+          </div>
+          <div class="flex flex-wrap">
+            <label v-for="order in orders" :key="order.value" :for="`sortOrder${order.value}`"
+              class="inline-flex items-center space-x-2 cursor-pointer text-lg mr-4 mb-2">
+              <input type="radio" :id="`sortOrder${order.value}`" v-model="orderBy" :value="order.value"
+                class="form-radio text-blue-500 focus:ring-2 focus:ring-blue-300">
+              <span>{{ order.text }}</span>
+            </label>
+          </div>
+        </div>
+
         <div class="w-full flex justify-center" v-if="loading">
           <iframe class="w-1/2" src="https://embed.lottiefiles.com/animation/99297" title="loading"></iframe>
         </div>
