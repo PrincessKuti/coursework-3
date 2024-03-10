@@ -29,15 +29,38 @@ export default {
     Checkout
   },
   data: () => ({
+    loading: false,
+    error: null,
+    url: 'https://course.eu-north-1.elasticbeanstalk.com',
     showCart: false,
     shoppingCart: [],
+    searchQuery: '',
+    lessons: [],
   }),
   methods: {
+    async getLessons() {
+      try {
+        this.loading = true;
+
+        const url = `${this.url}/lessons/?search=${this.searchQuery}`;
+
+        const response = await fetch(url);
+
+        this.lessons = await response.json();
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
+    },
     toggleCart() {
       // Toggle the visibility of the shopping cart
       this.showCart = !this.showCart;
     },
-  }
+  },
+  created() {
+    this.getLessons();
+  },
 }
 
 </script>
